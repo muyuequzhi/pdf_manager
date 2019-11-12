@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+    <!--  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="{% static "js/vue.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
+ 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/index.css"%}" />
+</head>
+
+<body>
+
+                <div id="pdf">
+                    [[message]]
+
+                    <ul>
+                    <li v-for="person in people">
+                        <a v-bind:href="person.url">[[person.name]]</a>
+                        <button v-on:click="greet(person.name)">hey</button>
+                    </li>
+                    </ul>
+                </div>
+
+    <div class="container" id="app">
+        <!--左侧边栏-->
+        <div class="aside">
+            <h1 class="header">
+                <a href="javascript:;">{{appName}}</a>
+            </h1>
+            <ul class="menu-list">
+                <li :class="{cur: showType=='all'}" @click="changeShowType('all')">
+                    <a href="javascript:;">
+                        <i class="icon icon-all"></i>
+                        <span>常见问题</span>
+                    </a>
+                </li>
+                <li :class="{cur: showType=='doc'}" @click="changeShowType('doc')">
+                    <a href="javascript:;">
+                        <i class="icon icon-doc"></i>
+                        <span>学习文档</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--右侧主区域内容-->
+        <div class="main">
+            <!--顶部工具栏-->
+            <div class="toolbar">
+                <div class="layout clearfix">
+                    <div class="action-wrap action-wrap-upload">
+                        <div class="action-item">
+                            <i class="icon icon-upload-s"></i>
+                            <span class="act-txt">上传</span>
+                        </div>
+                    </div>
+
+                    <div class="action-wrap">
+                        <div class="action-item">
+                            <i class="icon icon-add"></i>
+                            <span class="act-txt">新建</span>
+                        </div>
+                    </div>
+
+                    <div class="action-wrap">
+                        <div class="action-item">
+                            <i class="icon icon-trash"></i>
+                            <span class="act-txt">删除</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--主体内容-->
+            <div class="main-body">
+
+               <script >
+               // 接收后端返回的数据，以列表形式展现，点击后可以预览pdf
+                    var people = {{ items_json|safe }}
+                    //var data = people[0]
+                    for (var data in people){
+                        console.log(data)
+                        var files = people[data]
+                        for (var file in files){
+                            console.log(file)
+                            var file_name = file
+                            var file_url = files[file]
+                            //alert(files[file])
+                        }
+                    }
+                </script>
+
+                <div id="pdf">
+                    [[message]]
+
+                    <ul>
+                    <li v-for="person in people">
+                        <a v-bind:href="person.url">[[person.name]]</a>
+                        <button v-on:click="greet(person.name)">hey</button>
+                    </li>
+                    </ul>
+                </div>
+                
+                                <a href="http://127.0.0.1/preview.pdf">hello</a>
+                                <a href="xxx">hello</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--画框-->
+    <div class="draw-selector"></div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/index.css"%}" />
+    <script src="{% static "js/vue.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
+    
+    
+</head>
+<body>
+    <div class="container" id="pdf">
+        <!--左侧边栏-->
+        <div class="aside">
+            <h1 class="header">
+                <a href="javascript:;">[[appName]]</a>
+            </h1>
+            <ul class="menu-list">
+                <li :class="{cur: showType=='all'}" @click="changeShowType('all')">
+                    <a href="javascript:;">
+                        <i class="icon icon-all"></i>
+                        <span>常见问题</span>
+                    </a>
+                </li>
+                <li :class="{cur: showType=='doc'}" v-on:click="hangeShowType('doc')">
+                    <a href="javascript:;">
+                        <i class="icon icon-doc"></i>
+                        <span>学习文档</span>
+                    </a>
+                </li>
+            </ul>
+            <nav v-bind:class="active" v-on:click.prevent>
+		<!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
+              <a href="#" class="home" v-on:click="lsFile('problem')">Home</a>
+              <a href="#" class="projects" v-on:click="lsFile('文档')">文档</a>
+            </nav>
+            <p>[[appName]]</p>
+        </div>
+        <!--右侧主区域内容-->
+        <div class="main">
+            <!--顶部工具栏-->
+            <div class="toolbar">
+                <div class="layout clearfix">
+                    <div class="action-wrap action-wrap-upload">
+                        <div class="action-item">
+                            <i class="icon icon-upload-s"></i>
+                            <span class="act-txt">上传</span>
+                        </div>
+                    </div>
+
+                    <div class="action-wrap">
+                        <div class="action-item">
+                            <i class="icon icon-add"></i>
+                            <span class="act-txt">新建</span>
+                        </div>
+                    </div>
+
+                    <div class="action-wrap">
+                        <div class="action-item">
+                            <i class="icon icon-trash"></i>
+                            <span class="act-txt">删除</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--主体内容-->
+                    <ul>
+                    <li v-for="file in files">
+                        <a v-bind:href="file.url">[[file.name]]</a>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+
+
+{% if items_json %}
+
+  <script src="{% static "js/vue.js"%}"></script>
+  <script type='text/javascript'>
+    var files = {{ items_json|safe }};
+  </script>
+
+  <script>
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#pdf',
+      data: {
+          appName: '知识库',
+          files: files,
+
+
+      },
+      methods: {
+          greet: function(name) {
+              alert('Hello from ' + name + '!')
+          },
+          lsFile: function(name) {
+            this.appName = files[0].name
+            if (name == 'problem') {
+              this.appName = files[1].name
+            } else if (name == 'document') {
+              this.appName = files[0].name
+            } else {}
+          }
+      }
+    });
+  </script>
+{% else %}
+  <p>No items available.</p>
+{% endif %}

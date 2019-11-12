@@ -1,0 +1,48 @@
+{% if items_json %}
+
+  <script src="{% static "js/vue.js"%}"></script>
+  <script type='text/javascript'>
+    var people = {{ items_json|safe }};
+  </script>
+
+  <div id="app">
+
+    <ul>
+      <li v-for="person in people">
+        <a v-bind:href="person.url">[[ person.name ]]</a>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+          message: 'Hello Vue!',
+          people: people,
+      },
+      methods: {
+          greet: function(name) {
+              alert('Hello from ' + name + '!')
+          }
+      }
+    });
+  </script>
+{% else %}
+  <p>No items available.</p>
+{% endif %}
+
+<!-- js测试
+                        //var data = people[0]
+                    for (var data in people){
+                        console.log(data)
+                        var files = people[data]
+                        for (var file in files){
+                            console.log(file)
+                            var file_name = file
+                            var file_url = files[file]
+                            //alert(files[file])
+                        }
+                    }
+-->

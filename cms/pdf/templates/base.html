@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <title>知识库</title>
+</head>
+<body>
+    <a href="http://127.0.0.1">one</a>
+    <a href="http://127.0.0.1">two</a>
+
+    <form method="post">
+    {% csrf_token %}
+    <input type="file" value="上传">
+    <input type="month" value="删除">
+    <button onclick="myFunction()">点我</button>
+    <p id="demo"></p>
+    <script>
+    function myFunction(){
+        var x;
+        var person=prompt("请输入你的名字","Harry Potter");
+        if (person!=null && person!=""){
+            x="你好 " + person + "! 今天感觉如何?";
+            document.getElementById("demo").innerHTML=x;
+        }
+    }
+    </script>
+    <input type="text" value="新建系统">
+    <input type="text" value="重命名">
+    </form>
+    {% block content %}
+    {% endblock content %}
+</body>
